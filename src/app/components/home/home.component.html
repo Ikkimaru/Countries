@@ -1,3 +1,30 @@
-<p>
-  home works!
-</p>
+<div>
+    <h1>Country Names</h1>
+    <label for="search">Search countries:</label>
+    <input
+            type="text"
+            id="search"
+            [(ngModel)]="searchTerm"
+            (input)="applyFilter()"
+            placeholder="Type to filter countries..."
+    />
+<br>
+    <label for="itemsPerPage">Countries per page:</label>
+    <select id="itemsPerPage" (change)="onItemsPerPageChange($event)">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+    </select>
+
+
+    <ul>
+        <li *ngFor="let name of paginatedNames">{{ name }}</li>
+    </ul>
+
+    <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+</div>
