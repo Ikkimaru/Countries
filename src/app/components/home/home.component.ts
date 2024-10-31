@@ -62,8 +62,7 @@ export class HomeComponent implements OnInit{
 
   onItemsPerPageChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
-    const newItemsPerPage = parseInt(target.value, 10);
-    this.itemsPerPage = newItemsPerPage;
+    this.itemsPerPage = parseInt(target.value, 10);
     this.totalPages = Math.ceil(this.filteredCountryNames.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to the first page when items per page changes
     this.updatePaginatedNames();
