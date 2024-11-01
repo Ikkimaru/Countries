@@ -1,0 +1,32 @@
+.dot-container {
+  position: absolute; /* Position the container relative to the map */
+}
+
+.dot {
+  background-color: red; /* Dot color */
+  border-radius: 50%; /* Make dots circular */
+  width: 8px; /* Width of dots */
+  height: 8px; /* Height of dots */
+  transform: translate(-50%, -50%); /* Center dots on their coordinates */
+}
+
+.dot-label {
+  position: absolute; /* Position relative to the dot container */
+  left: 50%; /* Center horizontally */
+  top: 50%; /* Center vertically */
+  transform: translate(-50%, -120%); /* Move label above the dot */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for visibility */
+  color: white; /* Text color */
+  font-size: 8px; /* Smaller text size by default */
+  padding: 2px 5px; /* Padding around text */
+  border-radius: 4px; /* Slightly rounded corners */
+  white-space: nowrap; /* Prevent text wrapping */
+  pointer-events: none; /* Prevent mouse events on the label */
+  transition: font-size 0.3s; /* Smooth transition for resizing */
+}
+
+/* Larger size for zoomed-in state */
+.dot-label.zoomed {
+  font-size: 12px; /* Increased text size when zoomed */
+}
+

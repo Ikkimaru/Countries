@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CountryService} from '../../services/country.service';
 import {FormsModule} from "@angular/forms";
+import {MapComponent} from "../map/map.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-      CommonModule, FormsModule
+      CommonModule, FormsModule,MapComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -20,12 +21,13 @@ export class HomeComponent implements OnInit{
   itemsPerPage: number = 10; // Default items per page
   totalPages: number = 0; // Total number of pages
   searchTerm: string = ''; // Filter term for search
+  selectedCountry: any = null; // Holds data for the selected country
 
   constructor(private countryService: CountryService) {}
 
   ngOnInit(): void {
     this.countryService.getCountryNames().subscribe((countries) => {
-      this.countryNames = countries.map((country) => country.name.common);
+      this.countryNames = countries.map((country) => country.name.common).sort((a, b) => a.localeCompare(b));
       this.applyFilter(); // Initial filter application
     });
   }
@@ -66,5 +68,11 @@ export class HomeComponent implements OnInit{
     this.totalPages = Math.ceil(this.filteredCountryNames.length / this.itemsPerPage);
     this.currentPage = 1; // Reset to the first page when items per page changes
     this.updatePaginatedNames();
+  }
+
+  fetchCountryDetails(countryName: string): void {
+    this.countryService.getCountryByName(countryName).subscribe((country) => {
+      this.selectedCountry = country[0]; // API returns an array
+    });
   }
 }

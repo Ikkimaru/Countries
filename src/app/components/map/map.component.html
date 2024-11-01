@@ -1,0 +1,5 @@
+<img #image class="map-image" [src]="imageSrc" alt="Map of the World"/>
+<div *ngFor="let dot of dots" class="dot-container" [style.left.px]="dot.x" [style.top.px]="dot.y">
+  <div class="dot"></div>
+  <div class="dot-label"  [ngClass]="{'zoomed': zoomed}">{{ dot.country }}</div>
+</div>

@@ -18,13 +18,37 @@
     </select>
 
 
-    <ul>
-        <li *ngFor="let name of paginatedNames">{{ name }}</li>
-    </ul>
+    <!-- Country list as a grid of div elements -->
+    <div class="country-grid">
+        <div class="country-card" *ngFor="let name of paginatedNames" (click)="fetchCountryDetails(name)">
+            {{ name }}
+        </div>
+    </div>
 
     <div class="pagination">
         <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
         <span>Page {{ currentPage }} of {{ totalPages }}</span>
         <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
     </div>
+
+    <div *ngIf="selectedCountry" class="country-details">
+        <div class="details-content">
+            <h2>Details for {{ selectedCountry.name.common }}</h2>
+            <p><strong>Official Name:</strong> {{ selectedCountry.name.official }}</p>
+            <p><strong>Region:</strong> {{ selectedCountry.region }}</p>
+            <p><strong>Subregion:</strong> {{ selectedCountry.subregion }}</p>
+            <p><strong>Population:</strong> {{ selectedCountry.population }}</p>
+            <p><strong>Capital:</strong> {{ selectedCountry.capital[0] }}</p>
+        </div>
+
+        <!-- Flag image with shadow -->
+        <img
+                *ngIf="selectedCountry.flags.png"
+                [src]="selectedCountry.flags.png"
+                alt="{{ selectedCountry.name.common }} Flag"
+                class="country-flag"
+        />
+    </div>
 </div>
+
+<app-map></app-map>
