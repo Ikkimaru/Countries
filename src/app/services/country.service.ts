@@ -24,8 +24,8 @@ export class CountryService {
     }
 
     // Fetch data from API and cache it
-    // return this.http.get<CountryCoordinates[]>(`${this.apiUrl}/all?fields=name,latlng`).pipe(
-    return this.http.get<CountryCoordinates[]>(`/countries.json`).pipe(
+    return this.http.get<CountryCoordinates[]>(`${this.apiUrl}/all?fields=name,latlng`).pipe(
+    //return this.http.get<CountryCoordinates[]>(`/countries.json`).pipe(
       tap(data => {
         this.cachedData = data; // Cache the fetched data
         console.log('Fetched and cached data:', data); // Debug log for fetched data
