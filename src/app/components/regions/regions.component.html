@@ -1,0 +1,123 @@
+<div class="container mt-4">
+  <!-- Flex container to align dropdowns horizontally -->
+  <div class="d-flex gap-2">
+    <!-- Region Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="regionDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{ selectedRegion || 'Select Region' }}
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="regionDropdown">
+        <li *ngFor="let region of uniqueRegions">
+          <a class="dropdown-item" href="#" (click)="onRegionSelect(region)">{{ region }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Subregion Dropdown -->
+    <div class="dropdown" *ngIf="selectedRegion">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="subregionDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{ selectedSubregion || 'Select Subregion' }}
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="subregionDropdown">
+        <li *ngFor="let subregion of filteredSubregions">
+          <a class="dropdown-item" href="#" (click)="onSubregionSelect(subregion)">{{ subregion }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Country Dropdown -->
+    <div class="dropdown" *ngIf="selectedSubregion">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="countryDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{ selectedCountry || 'Select Country' }}
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="countryDropdown">
+        <li *ngFor="let country of filteredCountries">
+          <a class="dropdown-item" href="#" (click)="onCountrySelect(country)">{{ country }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedCountryInfo && !loadingData" class="country-info">
+  <h2>{{ selectedCountryInfo.name.common }} ({{ selectedCountryInfo.flag }})</h2>
+
+  <!-- Flag Image -->
+  <img [src]="selectedCountryInfo.flags?.png" alt="Flag of {{ selectedCountryInfo.name.common }}" class="country-flag" />
+
+  <!-- Official Name -->
+  <p><strong>Official Name:</strong> {{ selectedCountryInfo.name.official }}</p>
+
+  <!-- Region and Subregion -->
+  <p><strong>Region:</strong> {{ selectedCountryInfo.region }}</p>
+  <p><strong>Subregion:</strong> {{ selectedCountryInfo.subregion || 'No Subregions' }}</p>
+
+  <!-- Population and Area -->
+  <p><strong>Population:</strong> {{ selectedCountryInfo.population | number }}</p>
+  <p><strong>Area:</strong> {{ selectedCountryInfo.area | number }} km²</p>
+
+  <!-- Lat/Lng -->
+  <p>
+    <strong>Coordinates:</strong>
+    {{ selectedCountryInfo.latlng ? Math.abs(selectedCountryInfo.latlng[0]) : 0 }}° {{ selectedCountryInfo.latlng ? (selectedCountryInfo.latlng[0] >= 0 ? 'N' : 'S') : '' }},
+    {{ selectedCountryInfo.latlng ? Math.abs(selectedCountryInfo.latlng[1]) : 0 }}° {{ selectedCountryInfo.latlng ? (selectedCountryInfo.latlng[1] >= 0 ? 'E' : 'W') : '' }}
+  </p>
+
+
+
+
+  <!-- Demonyms -->
+  <p>
+    <strong>Demonyms:</strong>
+    Male - {{ selectedCountryInfo.demonyms?.['eng']?.['m'] || 'N/A' }},
+    Female - {{ selectedCountryInfo.demonyms?.['eng']?.['f'] || 'N/A' }}
+  </p>
+
+
+  <!-- Languages Translations -->
+  <div>
+    <strong>Translations:</strong>
+    <ul>
+      <li *ngFor="let translation of countryTranslations">
+        <strong>{{ translation.language }}:</strong> {{ translation.common }} ({{ translation.official }})
+      </li>
+    </ul>
+  </div>
+
+  <!-- Timezones -->
+  <p><strong>Timezones:</strong> {{ selectedCountryInfo.timezones?.join(', ') }}</p>
+
+  <!-- Maps Links -->
+  <div>
+    <p><strong>Maps:</strong></p>
+    <ul>
+      <li><a [href]="selectedCountryInfo.maps?.googleMaps" target="_blank">Google Maps</a></li>
+      <li><a [href]="selectedCountryInfo.maps?.openStreetMaps" target="_blank">OpenStreetMap</a></li>
+    </ul>
+  </div>
+
+  <!-- Coat of Arms -->
+  <div *ngIf="selectedCountryInfo.coatOfArms?.png">
+    <p><strong>Coat of Arms:</strong></p>
+    <img [src]="selectedCountryInfo.coatOfArms?.png" alt="Coat of Arms of {{ selectedCountryInfo.name.common }}" class="coat-of-arms" />
+  </div>
+</div>
+
