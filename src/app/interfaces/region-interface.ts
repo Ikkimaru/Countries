@@ -32,6 +32,9 @@ export interface RegionInterface {
       common: string;
     };
   };
+  languages?: { [code: string]: string };
+  capital?: string[];
+  capitalInfo?:{latlng: number[];};
   timezones?: string[];
   maps?: {
     googleMaps?: string;

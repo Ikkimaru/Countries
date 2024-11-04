@@ -10,4 +10,5 @@ export interface CountryCoordinates {
     }
   };
   latlng: [lat:number, lon:number];
+  cca2: string;
 }

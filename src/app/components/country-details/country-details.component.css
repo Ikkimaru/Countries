@@ -1,0 +1,60 @@
+.country-info {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flag-coat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Adjust as needed for spacing */
+}
+
+.flag-container {
+  flex: 0 0 auto; /* Prevent the flag from growing */
+}
+
+.country-flag {
+  height: auto; /* Allow the flag height to be determined by its aspect ratio */
+  width: 100%; /* Set to full width of its container */
+  max-height: 150px; /* Set a max height if needed to prevent overflow */
+}
+
+table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Merge borders */
+}
+
+td {
+  padding: 8px; /* Padding inside cells */
+  vertical-align: top; /* Align content at the top */
+}
+
+.coat-container {
+  display: flex; /* Make the coat container a flexbox for alignment */
+  flex: 1; /* Allow the coat of arms to adjust proportionally */
+}
+
+.coat-of-arms {
+  height: auto; /* Maintain aspect ratio */
+  width: 100%; /* Set to full width of its container */
+  max-height: 80%; /* Adjust based on the flag's height */
+  align-self: center; /* Center coat of arms vertically */
+  margin-left: 10px; /* Adjust spacing between images */
+}
+
+.coat-of-arms {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.flag-container:hover,
+.coat-container:hover {
+  transform: scale(1.05);
+}

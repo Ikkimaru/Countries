@@ -1,0 +1,118 @@
+<div *ngIf="selectedCountryInfo" class="country-info text-center">
+  <h2>{{ selectedCountryInfo.name.common }}</h2>
+
+  <!-- Flag and Coat of Arms Container -->
+  <div class="flag-coat-container">
+    <!-- Flag Image -->
+    <div class="flag-container">
+      <img [src]="selectedCountryInfo.flags?.png" alt="Flag of {{ selectedCountryInfo.name.common }}" class="country-flag" />
+    </div>
+
+    <!-- Coat of Arms Image -->
+    <div class="coat-container">
+      <img *ngIf="selectedCountryInfo.coatOfArms?.png; else noCoatArms" [src]="selectedCountryInfo.coatOfArms?.png" alt="Coat of Arms of {{ selectedCountryInfo.name.common }}" class="coat-of-arms" />
+      <ng-template #noCoatArms>
+        <p><strong>No Coat of Arms</strong></p>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Official Name -->
+  <p><strong>Official Name:</strong> {{ selectedCountryInfo.name.official }}</p>
+
+
+  <!-- Lat/Lng -->
+  <p>
+    <strong>Coordinates:</strong>
+    {{ selectedCountryInfo.latlng ? Math.abs(selectedCountryInfo.latlng[0]) : 0 }}° {{ selectedCountryInfo.latlng ? (selectedCountryInfo.latlng[0] >= 0 ? 'N' : 'S') : '' }},
+    {{ selectedCountryInfo.latlng ? Math.abs(selectedCountryInfo.latlng[1]) : 0 }}° {{ selectedCountryInfo.latlng ? (selectedCountryInfo.latlng[1] >= 0 ? 'E' : 'W') : '' }}
+  </p>
+
+
+  <!-- Region and Subregion -->
+  <p><strong>Region:</strong> {{ selectedCountryInfo.region }}</p>
+  <p><strong>Subregion:</strong> {{ selectedCountryInfo.subregion || 'No Subregions' }}</p>
+
+  <!-- Population and Area -->
+  <p><strong>Population:</strong> {{ selectedCountryInfo.population | number }}</p>
+  <p><strong>Area:</strong> {{ selectedCountryInfo.area | number }} km²</p>
+
+
+  <!-- Capital Location -->
+  <p>
+    <strong>Capital:</strong>
+    {{ selectedCountryInfo.capital || 'N/A' }} ({{ capitalLatLng }})
+  </p>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Demonyms -->
+  <table style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td style="text-align: right; border: none;">
+        <strong>Demonym:</strong>
+      </td>
+      <td style="text-align: left; border: none;">
+        Male: {{ selectedCountryInfo.demonyms?.['eng']?.['m'] || 'N/A' }}<br />
+        Female: {{ selectedCountryInfo.demonyms?.['eng']?.['f'] || 'N/A' }}
+      </td>
+    </tr>
+  </table>
+
+
+
+  <!-- Languages and Translations Side by Side -->
+  <div class="d-flex justify-content-between mb-3">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="translationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Country Translations
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="translationsDropdown" style="max-height: 200px; overflow-y: auto;">
+        <li *ngFor="let translation of countryTranslations">
+          <span class="dropdown-item">
+            {{ getLanguageName(translation.language) }}: {{ translation.common }} ({{ translation.official }})
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="languagesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Spoken Languages
+      </button>
+      <ul *ngIf="getLanguages().length > 0" class="dropdown-menu" aria-labelledby="languagesDropdown" style="max-height: 200px; overflow-y: auto;">
+        <li *ngFor="let language of getLanguages()">
+          <span class="dropdown-item">
+            ({{language.key}}) {{ language.value }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Timezones with Current Time -->
+  <p><strong>Timezones:</strong></p>
+  <ul class="list-unstyled">
+    <li *ngFor="let timezone of selectedCountryInfo.timezones">
+      {{ timezone }} - Current Time: {{ getCurrentTime(timezone) }}
+    </li>
+  </ul>
+
+  <!-- Maps Links -->
+  <div>
+    <p><strong>Maps:</strong></p>
+    <ul class="list-unstyled">
+      <li><a [href]="selectedCountryInfo.maps?.googleMaps" target="_blank">Google Maps</a></li>
+      <li><a [href]="selectedCountryInfo.maps?.openStreetMaps" target="_blank">OpenStreetMap</a></li>
+    </ul>
+  </div>
+</div>

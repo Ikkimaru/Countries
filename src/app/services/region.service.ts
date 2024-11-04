@@ -14,15 +14,18 @@ export class RegionService {
   constructor(private http: HttpClient) {}
 
   getRegions(): Observable<RegionInterface[]> {
+    // localStorage.setItem('regions', ''); //remove local storage
     // Check if localStorage is available
     if (typeof window !== 'undefined' && localStorage.getItem('regions')) {
       // Return cached regions from localStorage if available
       const cachedRegions = JSON.parse(localStorage.getItem('regions')!);
+      console.log("Getting from cache")
       return new Observable<RegionInterface[]>(observer => {
         observer.next(cachedRegions);
         observer.complete();
       });
     } else {
+      console.log("Getting from INTERNET")
       // Fetch regions from the API and store in localStorage
       return this.http.get<RegionInterface[]>(`${this.apiUrl}/all?fields=name,region,subregion,cca2`).pipe(
         tap(regions => {
