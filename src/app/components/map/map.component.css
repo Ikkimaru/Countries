@@ -1,3 +1,7 @@
+.map-container {
+  position: relative; /* Ensure the dots and overlay are positioned relative to this container */
+}
+
 .dot-container {
   position: absolute; /* Position the container relative to the map */
 }
@@ -5,9 +9,16 @@
 .dot {
   background-color: red; /* Dot color */
   border-radius: 50%; /* Make dots circular */
-  width: 8px; /* Width of dots */
-  height: 8px; /* Height of dots */
   transform: translate(-50%, -50%); /* Center dots on their coordinates */
+}
+
+.dot.capital-dot {
+  background-color: blueviolet; /* Different color for capital dots */
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
 
 .dot-label {
@@ -17,16 +28,55 @@
   transform: translate(-50%, -120%); /* Move label above the dot */
   background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for visibility */
   color: white; /* Text color */
-  font-size: 8px; /* Smaller text size by default */
   padding: 2px 5px; /* Padding around text */
   border-radius: 4px; /* Slightly rounded corners */
   white-space: nowrap; /* Prevent text wrapping */
-  pointer-events: none; /* Prevent mouse events on the label */
-  transition: font-size 0.3s; /* Smooth transition for resizing */
+  transition: font-size 0.3s, width 0.3s, height 0.3s; /* Smooth transition for resizing */
 }
 
-/* Larger size for zoomed-in state */
-.dot-label.zoomed {
-  font-size: 12px; /* Increased text size when zoomed */
+.overlay {
+  position: absolute;
+  z-index: 10; /* Ensures it appears above other elements */
+  /*background-color: white;  Optional: to see the overlay clearly */
+  /*border: 1px solid red;  Optional: border for clarity */
+  width: 450px; /* Adjust based on your content */
+  height: 850px; /* Or a fixed height */
+  padding: 10px; /* Optional: padding inside the overlay */
+  /* Add transitions or animations if needed */
+  transition: all 0.3s ease;
 }
 
+.overlay.left {
+  left: 0;
+}
+
+.overlay.right {
+  right: 0; /* Position this on the right */
+}
+
+.country-details {
+  position: absolute; /* Position this as needed */
+  z-index: 1000; /* Ensure it overlays above everything else */
+}
+
+.highlighted {
+  border: 2px solid red; /* Red border for highlighted countries */
+  box-sizing: border-box; /* Ensure padding/border is included in total width/height */
+  color: white; /* Text color */
+}
+
+.search-input-wrapper {
+  position: fixed; /* Fixes the input to the bottom of the viewport */
+  bottom: 10px; /* Adjust as needed for spacing from the bottom */
+  left: 10px; /* Adjust as needed for spacing from the left */
+  right: 10px; /* Adjust to keep input within view */
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+.search-input {
+  padding: 8px; /* Padding for better user experience */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  width: 25%; /* Full width of the wrapper */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional: add a slight shadow */
+}

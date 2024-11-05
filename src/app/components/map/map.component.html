@@ -1,5 +1,56 @@
-<img #image class="map-image" [src]="imageSrc" alt="Map of the World"/>
-<div *ngFor="let dot of dots" class="dot-container" [style.left.px]="dot.x" [style.top.px]="dot.y">
-  <div class="dot"></div>
-  <div class="dot-label"  [ngClass]="{'zoomed': zoomed}">{{ dot.country }}</div>
+<div class="map-container">
+
+  <div class="search-input-wrapper">
+    <input
+      type="text"
+      placeholder="Search for a country"
+      [(ngModel)]="searchQuery"
+      (input)="onSearchChange()"
+      class="search-input"
+    />
+  </div>
+
+  <p>Ctrl+MouseWheel to Zoom</p>
+
+  <img #image class="map-image" [src]="imageSrc" alt="Map of the World" (click)="toggleCountryDetails()"/>
+
+  <div *ngFor="let capitalDot of capitalDots" [ngStyle]="{'left.px': capitalDot.x, 'top.px': capitalDot.y}" class="dot capital-dot" title="{{ capitalDot.capital + ', ' + capitalDot.country }}">
+  </div>
+
+  <div *ngFor="let dot of dots" class="dot-container" [style.left.px]="dot.x" [style.top.px]="dot.y">
+    <div
+      class="dot"
+      [style.width.px]="dotSize"
+      [style.height.px]="dotSize"
+      [ngStyle]="{
+      top: calculateDotPosition(dot).top,
+      left: calculateDotPosition(dot).left
+    }">
+    </div>
+    <div
+      class="dot-label"
+      [style.fontSize.px]="labelFontSize"
+      [ngClass]="{'highlighted': isCountryHighlighted(dot.country)}"
+    (click)="onLabelClick($event, dot.country)">
+    {{ dot.country }}
+  </div>
+</div>
+
+
+<div
+    #childComponent
+    class="overlay"
+    *ngIf="isOverlayVisible"
+    [ngStyle]="{
+      left: overlayPosition.left + 'px',
+      top: overlayPosition.top + 'px',
+      width: Math.min(childComponentWidth, 400) + 'px',
+      height: Math.min(childComponentHeight, 300) + 'px'
+    }">
+    <app-country-details
+      [selectedCountry]="selectedCountry ? selectedCountry.country : null"
+      [regionService]="regionService"
+      class="country-details">
+    </app-country-details>
+  </div>
 </div>

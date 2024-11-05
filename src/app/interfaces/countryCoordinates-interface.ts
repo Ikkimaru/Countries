@@ -10,5 +10,6 @@ export interface CountryCoordinates {
     }
   };
   latlng: [lat:number, lon:number];
+  capitalInfo?:{latlng: number[];};
   cca2: string;
 }

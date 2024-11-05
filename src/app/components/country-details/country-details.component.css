@@ -21,7 +21,11 @@
 .country-flag {
   height: auto; /* Allow the flag height to be determined by its aspect ratio */
   width: 100%; /* Set to full width of its container */
-  max-height: 150px; /* Set a max height if needed to prevent overflow */
+  max-height: 150px; /* Set a max height to prevent overflow */
+  border: 2px solid #000; /* Black border to help define edges, can be adjusted */
+  border-radius: 4px; /* Slightly rounded corners for a smoother look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add subtle shadow for depth */
+  background-color: white; /* Fallback for cases where the flag is transparent */
 }
 
 table {
@@ -58,3 +62,27 @@ td {
 .coat-container:hover {
   transform: scale(1.05);
 }
+
+.country-info {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background: white; /* Set white background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* Set position relative for absolute children */
+  overflow: hidden; /* Hide overflow */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

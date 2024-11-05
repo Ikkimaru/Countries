@@ -1,16 +1,22 @@
 <div *ngIf="selectedCountryInfo" class="country-info text-center">
+
+
   <h2>{{ selectedCountryInfo.name.common }}</h2>
 
   <!-- Flag and Coat of Arms Container -->
   <div class="flag-coat-container">
     <!-- Flag Image -->
     <div class="flag-container">
-      <img [src]="selectedCountryInfo.flags?.png" alt="Flag of {{ selectedCountryInfo.name.common }}" class="country-flag" />
+      <a [href]="selectedCountryInfo.flags?.png" target="_blank" rel="noopener noreferrer">
+        <img [src]="selectedCountryInfo.flags?.png" alt="Flag of {{ selectedCountryInfo.name.common }}" class="country-flag" />
+      </a>
     </div>
 
     <!-- Coat of Arms Image -->
     <div class="coat-container">
-      <img *ngIf="selectedCountryInfo.coatOfArms?.png; else noCoatArms" [src]="selectedCountryInfo.coatOfArms?.png" alt="Coat of Arms of {{ selectedCountryInfo.name.common }}" class="coat-of-arms" />
+      <a *ngIf="selectedCountryInfo.coatOfArms?.png; else noCoatArms" [href]="selectedCountryInfo.coatOfArms?.png" target="_blank" rel="noopener noreferrer">
+        <img [src]="selectedCountryInfo.coatOfArms?.png" alt="Coat of Arms of {{ selectedCountryInfo.name.common }}" class="coat-of-arms" />
+      </a>
       <ng-template #noCoatArms>
         <p><strong>No Coat of Arms</strong></p>
       </ng-template>
@@ -44,17 +50,6 @@
     {{ selectedCountryInfo.capital || 'N/A' }} ({{ capitalLatLng }})
   </p>
 
-
-
-
-
-
-
-
-
-
-
-
   <!-- Demonyms -->
   <table style="width: 100%; border-collapse: collapse;">
     <tr>
@@ -67,8 +62,6 @@
       </td>
     </tr>
   </table>
-
-
 
   <!-- Languages and Translations Side by Side -->
   <div class="d-flex justify-content-between mb-3">

@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import {DatePipe, DecimalPipe, KeyValuePipe, NgForOf, NgIf} from '@angular/common';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, ElementRef, Renderer2} from '@angular/core';
+import {DatePipe, DecimalPipe, KeyValuePipe, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {RegionInterface} from '../../interfaces/region-interface';
 import {LanguageService} from '../../services/language.service';
 import { RegionService } from '../../services/region.service';
@@ -12,7 +12,8 @@ import { RegionService } from '../../services/region.service';
     NgForOf,
     NgIf,
     DatePipe,
-    KeyValuePipe
+    KeyValuePipe,
+    NgStyle
   ],
   templateUrl: './country-details.component.html',
   styleUrl: './country-details.component.css'
@@ -25,8 +26,9 @@ export class CountryDetailsComponent implements OnInit, OnChanges {
   selectedCountryInfo: RegionInterface | null = null;
   languageMap: { [key: string]: string } = {};
   loadingData = true;
+  backgorundMapUrl:string = "";
 
-  constructor(private languageService: LanguageService) {
+  constructor(private languageService: LanguageService,private el: ElementRef,private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -47,7 +49,15 @@ export class CountryDetailsComponent implements OnInit, OnChanges {
     if(this.selectedCountry) {
       this.getCountryInfo(this.selectedCountry);
     }
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+      }
+    });
+
+    resizeObserver.observe(this.el.nativeElement);
   }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedCountry'] && changes['selectedCountry'].currentValue) {
@@ -58,19 +68,24 @@ export class CountryDetailsComponent implements OnInit, OnChanges {
   getCurrentTime(timezone: string): string {
     const now = new Date();
 
-    // Extract the UTC offset (e.g., '-08:00') from the timezone string
-    const offsetHours = parseInt(timezone.split(':')[0].replace('UTC', ''), 10);
-    const offsetMinutes = parseInt(timezone.split(':')[1], 10);
+    // Convert current time to UTC
+    const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+
+    // Extract the UTC offset (e.g., '+02:00') from the timezone string
+    const offsetSign = timezone.includes('-') ? -1 : 1;
+    const offsetHours = parseInt(timezone.split(':')[0].replace('UTC', ''), 10) * offsetSign;
+    const offsetMinutes = parseInt(timezone.split(':')[1], 10) * offsetSign;
 
     // Calculate the offset in milliseconds
     const offsetInMilliseconds = (offsetHours * 60 + offsetMinutes) * 60 * 1000;
 
     // Create a new date object adjusted to the specified timezone
-    const localTime = new Date(now.getTime() + offsetInMilliseconds);
+    const localTime = new Date(utcTime + offsetInMilliseconds);
 
     // Return the time in a readable format (optional)
     return localTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
+
 
 
   getRegionInfo()
