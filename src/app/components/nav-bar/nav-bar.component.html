@@ -1,0 +1,28 @@
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleNavbar()"
+      aria-controls="sidebarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span> <!-- Bootstrap's default hamburger icon -->
+    </button>
+  </div>
+</nav>
+
+<div [ngClass]="{'sidebar': true, 'expanded': isExpanded}">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="map">View Map</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="regions">View Regions</a>
+    </li>
+  </ul>
+</div>

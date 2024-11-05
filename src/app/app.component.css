@@ -1,0 +1,9 @@
+.content {
+  transition: margin-left 0.3s ease; /* Smooth transition */
+  margin-top: 60px;
+  margin-left: 60px; /* Initial space for the toggle button */
+}
+
+.content.shifted {
+  margin-left: 200px; /* Shift the content right when navbar is expanded */
+}

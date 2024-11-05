@@ -1,0 +1,53 @@
+/* Navbar styles */
+.navbar {
+  position: fixed; /* Fix the navbar to the top */
+  top: 0; /* Set it to the top */
+  left: 0; /* Align it to the left */
+  right: 0; /* Extend it to the right */
+  z-index: 1030; /* Higher than the sidebar */
+  background-color: #f8f9fa; /* Match the sidebar background */
+  padding: 10px 20px; /* Optional padding for aesthetics */
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 60px; /* Adjust to leave space for the navbar */
+  left: -250px; /* Initially hidden to the left */
+  width: 250px; /* Width of the sidebar */
+  height: calc(100% - 60px); /* Full height minus navbar height */
+  background-color: #f8f9fa; /* Light background color */
+  transition: left 0.3s ease; /* Smooth transition */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  z-index: 1020; /* Below the navbar but above the content */
+}
+
+/* Show sidebar when expanded */
+.sidebar.expanded {
+  left: 0; /* Show sidebar */
+}
+
+/* Main content styles */
+.main-content {
+  margin-top: 60px; /* Space for the navbar */
+  transition: margin-left 0.3s ease; /* Smooth transition for main content */
+}
+
+/* If the sidebar is expanded, push the main content */
+.main-content.expanded {
+  margin-left: 250px; /* Push main content to the right */
+}
+
+/* Nav link styles */
+.nav-link {
+  padding: 15px 20px; /* Padding for each link */
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
+}
+
+/* Body styles to prevent overflow */
+body {
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}

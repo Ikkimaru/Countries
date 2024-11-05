@@ -32,6 +32,7 @@
   border-radius: 4px; /* Slightly rounded corners */
   white-space: nowrap; /* Prevent text wrapping */
   transition: font-size 0.3s, width 0.3s, height 0.3s; /* Smooth transition for resizing */
+  cursor: default; /* Keep the default mouse cursor */
 }
 
 .overlay {

@@ -14,7 +14,7 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="regionDropdown">
         <li *ngFor="let region of uniqueRegions">
-          <a class="dropdown-item" href="#" (click)="onRegionSelect(region)">{{ region }}</a>
+          <a class="dropdown-item" href="#" (click)="onRegionSelect(region); $event.preventDefault();">{{ region }}</a>
         </li>
       </ul>
     </div>
@@ -32,7 +32,7 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="subregionDropdown">
         <li *ngFor="let subregion of filteredSubregions">
-          <a class="dropdown-item" href="#" (click)="onSubregionSelect(subregion)">{{ subregion }}</a>
+          <a class="dropdown-item" href="#" (click)="onSubregionSelect(subregion); $event.preventDefault();">{{ subregion }}</a>
         </li>
       </ul>
     </div>
@@ -50,7 +50,7 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="countryDropdown">
         <li *ngFor="let country of filteredCountries">
-          <a class="dropdown-item" href="#" (click)="onCountrySelect(country)">{{ country }}</a>
+          <a class="dropdown-item" href="#" (click)="onCountrySelect(country); $event.preventDefault();">{{ country }}</a>
         </li>
       </ul>
     </div>
